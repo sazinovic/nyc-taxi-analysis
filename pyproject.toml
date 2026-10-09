@@ -1,7 +1,7 @@
 [project]
 name = "nyc-taxi"
 version = "0.1.0"
-description = "Add your description here"
+description = "End-to-end analysis of NYC Yellow Taxi trip data using Python"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
