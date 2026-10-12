@@ -15,6 +15,10 @@ wheels/
 # Jupyter
 .ipynb_checkpoints/
 *-checkpoint.ipynb
+scratch/
+
+# Local implementation notes
+reports/implementation-notes.md
 
 # Local datasets
 *.parquet

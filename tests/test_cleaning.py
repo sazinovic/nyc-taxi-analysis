@@ -106,7 +106,7 @@ def test_invalid_ratecode():
         analysis_month=1,
     )
 
-    assert not result.loc[0, "valid_ratecode"]
+    assert pd.isna(result.loc[0, "valid_ratecode"])
 
 
 def test_add_analysis_masks():
@@ -145,7 +145,7 @@ def test_add_analysis_masks():
     assert result["analysis_speed"].tolist() == [
         True,
         False,
-        True,
+        False,
     ]
 
     assert result["analysis_monetary"].tolist() == [

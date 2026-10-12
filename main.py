@@ -1,35 +1,21 @@
+"""Command-line entry point for monthly processing."""
+import argparse
 from pathlib import Path
+from nyc_taxi.longitudinal import build_monthly_summary
 
-from nyc_taxi.pipeline import run_pipeline
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data-dir", type=Path, default=Path.home() / "Data/raw/nyc-taxi/yellow")
+    parser.add_argument("--zone-file", type=Path, default=Path.home() / "Data/raw/nyc-taxi/taxi_zone_lookup.csv")
+    parser.add_argument("--output", type=Path, default=Path.home() / "Data/processed/nyc-taxi/monthly_summary.parquet")
+    parser.add_argument("--start", default="2015-01")
+    parser.add_argument("--end", default="2026-08")
+    parser.add_argument("--rebuild", action="store_true", help="Replace the checkpoint by processing the requested range afresh")
+    args = parser.parse_args()
+    result = build_monthly_summary(args.data_dir, args.zone_file, args.start, args.end, args.output, rebuild=args.rebuild)
+    print(f"Validated {len(result)} months; {int(result.trip_count.sum()):,} in-period records; {args.output}")
 
 
-data_file = (
-    Path.home()
-    / "Data/raw/nyc-taxi/yellow/2026/yellow_tripdata_2026-01.parquet"
-)
-
-zone_file = (
-    Path.home()
-    / "Data/raw/nyc-taxi/taxi_zone_lookup.csv"
-)
-
-df = run_pipeline(
-    trip_file=data_file,
-    zone_file=zone_file,
-    analysis_year=2026,
-    analysis_month=1,
-)
-
-print(
-    df[
-        [
-            "analysis_time_zone_payment",
-            "analysis_duration",
-            "analysis_distance",
-            "analysis_speed",
-            "analysis_monetary",
-            "analysis_passenger",
-            "analysis_ratecode",
-        ]
-    ].sum()
-)
+if __name__ == "__main__":
+    main()

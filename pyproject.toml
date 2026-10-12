@@ -1,10 +1,11 @@
 [project]
 name = "nyc-taxi"
-version = "0.1.0"
+version = "2.0.0"
 description = "End-to-end analysis of NYC Yellow Taxi trip data using Python"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "numpy>=2.0",
     "ipykernel>=7.4.0",
     "jupyterlab>=4.6.4",
     "matplotlib>=3.11.2",
@@ -21,5 +22,7 @@ packages = ["src/nyc_taxi"]
 
 [dependency-groups]
 dev = [
+    "nbclient>=0.10",
+    "nbformat>=5.10",
     "pytest>=9.1.1",
 ]
